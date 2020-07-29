@@ -2,7 +2,7 @@
 
 Minimal rsync deployment
 
-<img src="https://files.jongacnik.com/rploy.gif" width="707" height="479" style="max-width:100%;height:auto;" />
+<img src="https://files.jongacnik.com/rploy.gif" width="707" height="auto" />
 
 ## Usage
 
@@ -66,7 +66,7 @@ When deploying git repositories, `rploy` offers a `branches` option, which provi
 You will now be notified of your current working branch and the destination:
 
 
-<img src="https://files.jongacnik.com/rploy-3.gif" width="707" height="91" style="max-width:100%;height:auto;">
+<img src="https://files.jongacnik.com/rploy-3.gif" width="707" height="auto">
 
 <br>This provides an easy way to prevent issues like accidentally deploying your staging branch to production. It will always check your working branch and look for a deploy context. You can even pass `node-rsync` options into each branch, to get even more granular:
 

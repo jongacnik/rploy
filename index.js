@@ -5,6 +5,7 @@ var git = require('git-rev-sync')
 var yesno = require('yesno')
 var readPkgUp = require('read-pkg-up')
 var appRoot = require('app-root-path')
+var configFile = require(appRoot + '/rploy.config.js');
 
 ;(async () => {
   var config = await readPkgUp();
@@ -15,7 +16,7 @@ var appRoot = require('app-root-path')
   // Try to get options from rploy.config.js if not defined in package.json
   if (!options) {
     try {
-      var options = require(appRoot + '/rploy.config.js')();
+      var options = await configFile();
     } catch (e) { }
   }
   

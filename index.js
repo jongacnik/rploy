@@ -4,18 +4,25 @@ var Rsync = require('rsync')
 var git = require('git-rev-sync')
 var yesno = require('yesno')
 var readPkgUp = require('read-pkg-up')
+var appRoot = require('app-root-path')
+var configFile = require(appRoot + '/rploy.config.js');
 
 ;(async () => {
-  var config = await readPkgUp()
-  
-  // Extract rploy options
-  try {
-    var options = config.packageJson.rploy
-  } catch (e) { }
+  var config = await readPkgUp();
+
+  // Get options from package.json
+  var options = config.packageJson.rploy;
+
+  // Try to get options from rploy.config.js if not defined in package.json
+  if (!options) {
+    try {
+      var options = await configFile();
+    } catch (e) { }
+  }
   
   // Bail when no options
   if (typeof options !== 'object') {
-    console.error('⚠️  No `rploy` options found in package.json')
+    console.error('⚠️  No `rploy` options found in either package.json or rploy.config.js')
     return
   }
 

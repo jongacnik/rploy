@@ -21,6 +21,16 @@ Add source and destination options to your `package.json`:
 }
 ```
 
+Alternatively, you can create an `rploy.config.js` file in your document root:
+```js
+module.exports = () => {
+  return {
+    source: 'public/',
+    destination: "user@ip:/var/www/public/",
+  }
+}
+```
+
 Deploy:
 
 ```

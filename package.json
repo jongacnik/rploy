@@ -13,7 +13,7 @@
   "author": "Jon Gacnik <jon@folderstudio.com>",
   "license": "MIT",
   "dependencies": {
-    "git-rev-sync": "^2.0.0",
+    "git-rev-sync": "^3.0.2",
     "read-pkg-up": "^7.0.1",
     "rsync": "^0.6.1",
     "yesno": "^0.3.1"

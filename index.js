@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
+const fs = require('fs')
+const path = require('path')
 var Rsync = require('rsync')
 var git = require('git-rev-sync')
 var yesno = require('yesno')
 var readPkgUp = require('read-pkg-up')
-var appRoot = require('app-root-path')
-var configFile = require(appRoot + '/rploy.config.js');
+
 
 ;(async () => {
   var config = await readPkgUp();
@@ -13,15 +14,25 @@ var configFile = require(appRoot + '/rploy.config.js');
   // Get options from package.json
   var options = config.packageJson.rploy;
 
+  if(options) {
+	console.log('Loading rploy options from package.json');
+  }
+
   // Try to get options from rploy.config.js if not defined in package.json
   if (!options) {
-    try {
-      var options = await configFile();
-    } catch (e) { }
+	  try {
+		  var configPath = path.resolve('./rploy.config.js');
+		  if (fs.existsSync(configPath)) {
+			options = require(configPath);
+		  }
+
+    } catch (e) {
+		console.log(e);
+	}
   }
-  
+
   // Bail when no options
-  if (typeof options !== 'object') {
+  if (typeof options === 'undefined' || options.constructor === Object && Object.entries(options).length === 0) {
     console.error('⚠️  No `rploy` options found in either package.json or rploy.config.js')
     return
   }
@@ -35,13 +46,13 @@ var configFile = require(appRoot + '/rploy.config.js');
         if (typeof destination === 'object') {
           options = Object.assign(options, destination)
         } else {
-          options.destination = destination  
+          options.destination = destination
         }
         delete options.branches
         console.log(`⚙️  Deploy branch "${branch}" to ${destination}`)
       } else {
         console.error(`⚠️  No remote path defined for the current branch "${branch}"`)
-        return  
+        return
       }
     } catch (e) {
       console.error('⚠️  `rploy` is configured with the `branches` option, but this is not a git repository.')

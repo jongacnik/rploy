@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "git-rev-sync": "^3.0.2",
-    "read-pkg-up": "^7.0.1",
+    "read-pkg-up": "^9.1.0",
     "rsync": "^0.6.1",
     "yesno": "^0.3.1"
   }
